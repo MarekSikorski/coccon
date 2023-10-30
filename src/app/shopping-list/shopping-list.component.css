@@ -1,8 +1,12 @@
-.drop-zone {
-  width: 300px;
-  height: 200px;
-  border: 2px dashed #ccc;
-  text-align: center;
-  padding: 20px;
-  cursor: pointer;
+td {
+  text-align: right;
 }
+
+.bold {
+  font-weight: bold;
+}
+
+.background{
+  background: #eaf4ff;
+}
+

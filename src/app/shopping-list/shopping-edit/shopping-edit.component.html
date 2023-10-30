@@ -1,16 +1,58 @@
-<div class="row">
+<div class="row noprint">
   <div class="col-xs-12">
     <form (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="row">
         <div class="col-sm-4 form-group">
           <label for="name">Nazwa</label>
-          <input
-            type="text"
+          <select
+            #name
             id="name"
             class="form-control"
             name="name"
-            ngModel
+            [(ngModel)]="selectedValue"
             required>
+            <option value="Bluzka">Bluzka</option>
+            <option value="Biżuteria">Biżuteria</option>
+            <option value="Czapka">Czapka</option>
+            <option value="Komplet">Komplet</option>
+            <option value="Kurtka">Kurtka</option>
+            <option value="Obuwie">Obuwie</option>
+            <option value="Pasek">Pasek</option>
+            <option value="Rękawice">Rękawice</option>
+            <option value="Spodnie">Spodnie</option>
+            <option value="Spódnica">Spódnica</option>
+            <option value="Suknia">Suknia</option>
+            <option value="Sweter">Sweter</option>
+            <option value="Szal">Szal</option>
+            <option value="Torba">Torba</option>
+            <option value="Żakiet">Żakiet</option>
+            <option value="Portfel">Portfel</option>
+            <option value="Zegarek">Zegarek</option>
+            <option value="Tunika">Tunika</option>
+            <option value="Leginsy">Leginsy</option>
+            <option value="Bolerko">Bolerko</option>
+            <option value="Pierścień">Pierścień</option>
+            <option value="Naszyjnik">Naszyjnik</option>
+            <option value="Bransoletka">Bransoletka</option>
+            <option value="Broszka">Broszka</option>
+            <option value="Kpl.Biż">Kpl.Biż</option>
+            <option value="Kolczyki">Kolczyki</option>
+            <option value="Pudełko">Pudełko</option>
+            <option value="Kamizelka">Kamizelka</option>
+            <option value="Zawieszka">Zawieszka</option>
+            <option value="Kombinezon">Kombinezon</option>
+            <option value="Bluza">Bluza</option>
+            <option value="Brelok">Brelok</option>
+            <option value="Rekl.">Rekl.</option>
+            <option value="Dres">Dres</option>
+            <option value="Beret">Beret</option>
+            <option value="Koszula">Koszula</option>
+            <option value="Kapelusz">Kapelusz</option>
+            <option value="Okulary">Okulary</option>
+            <option value="Kardigan">Kardigan</option>
+            <option value="Dodatki">Dodatki</option>
+            <option value="Inne">Inne</option>
+          </select>
         </div>
         <div class="col-sm-2 form-group">
           <label for="quantity">Ilosc stwierdzona</label>
@@ -32,7 +74,7 @@
             name="price"
             ngModel
             required
-            pattern="^[1-9]+[0-9]*$">
+            pattern="^[0-9]+\.?[0-9]{0,2}$">
         </div>
         <div class="col-sm-2 form-group">
           <label for="sold">Sprzedane</label>

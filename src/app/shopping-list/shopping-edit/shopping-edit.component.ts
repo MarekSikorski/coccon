@@ -1,9 +1,9 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Ingredient} from '../../shared/ingredient.model';
 import {ShoppingListService} from '../shopping-list.service';
 import {NgForm} from '@angular/forms';
 import {Subscription} from 'rxjs';
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 
 @Component({
@@ -11,14 +11,20 @@ import { v4 as uuidv4 } from 'uuid';
   templateUrl: './shopping-edit.component.html',
   styleUrls: ['./shopping-edit.component.css']
 })
-export class ShoppingEditComponent implements OnInit, OnDestroy {
-  @ViewChild('f', {static: false}) slForm: NgForm | undefined ;
+export class ShoppingEditComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('f', {static: false}) slForm: NgForm | undefined;
+  @ViewChild('name') nameInput: ElementRef | undefined;
   subscription: Subscription = new Subscription();
   editMode = false;
   editedItemId: string = '';
   editedItem: Ingredient | undefined;
+  selectedValue: any;
 
   constructor(private shoppingListService: ShoppingListService) {
+  }
+
+  ngAfterViewInit(): void {
+    if (this.nameInput) this.nameInput.nativeElement.focus();
   }
 
   ngOnInit(): void {
@@ -29,18 +35,18 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
           this.editMode = true;
           this.editedItem = this.shoppingListService.getIngredient(id);
           if (this.editedItem)
-          this.slForm!.setValue({
-            name: this.editedItem.name,
-            quantity: this.editedItem.quantity,
-            price: this.editedItem.price,
-            sold: this.editedItem.sold
-          });
+            this.slForm!.setValue({
+              name: this.editedItem.name,
+              quantity: this.editedItem.quantity,
+              price: this.editedItem.price,
+              sold: this.editedItem.sold
+            });
         }
       );
   }
 
   ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   onSubmit(form: NgForm) {
@@ -57,12 +63,14 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     }
     this.editMode = false;
     form.reset();
+    if (this.nameInput) this.nameInput.nativeElement.focus();
   }
 
   onClear() {
     if (this.slForm)
-    this.slForm.reset();
+      this.slForm.reset();
     this.editMode = false;
+    if (this.nameInput) this.nameInput.nativeElement.focus();
   }
 
   onDelete() {

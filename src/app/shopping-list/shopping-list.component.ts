@@ -2,6 +2,7 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {Ingredient} from '../shared/ingredient.model';
 import {ShoppingListService} from './shopping-list.service';
 import {Subscription} from 'rxjs';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-shopping-list',
@@ -11,8 +12,10 @@ import {Subscription} from 'rxjs';
 export class ShoppingListComponent implements OnInit, OnDestroy {
   ingredients: Ingredient[] = [];
   private subscription = new Subscription();
+  private subscription1 = new Subscription();
 
   @ViewChild('fileInput') fileInput!: ElementRef;
+  summedIngredients: Ingredient[] = [];
 
   clearAndSelectFile() {
     this.fileInput.nativeElement.value = '';
@@ -29,34 +32,32 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
         this.ingredients = ingredients;
       }
     );
+
+    this.summedIngredients = this.shoppingListService.getSummedIngredients();
+    this.subscription1 = this.shoppingListService.summedIngredientsChanged.subscribe(
+      (ingredients: Ingredient[]) => {
+        this.summedIngredients = ingredients;
+      }
+    );
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.subscription1.unsubscribe();
   }
 
   onEditItem(id: string) {
     this.shoppingListService.startedEditing.next(id);
   }
 
-  getWorth(ingredient: Ingredient): number {
-    return ingredient.price * ingredient.quantity;
-
-
-  }
 
   getRemaining(ingredient: Ingredient): number {
     return ingredient.quantity - ingredient.sold;
-
-  }
-
-  printTable() {
-    window.print();
   }
 
   saveIngredients() {
     const jsonData = JSON.stringify(this.ingredients);
-    const blob = new Blob([jsonData], { type: 'application/json' });
+    const blob = new Blob([jsonData], {type: 'application/json'});
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -74,4 +75,50 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     };
     reader.readAsText(file);
   }
+
+  getPriceEuro(ingredient: Ingredient): string {
+    const priceString = ingredient.price.toFixed(2);
+    const [euro, cent] = priceString.split('.');
+    return `${euro}`;
+  }
+
+  getPriceCent(ingredient: Ingredient): string {
+    const priceString = ingredient.price.toFixed(2);
+    const [euro, cent] = priceString.split('.');
+    return `${cent}`;
+  }
+
+  getWorthEuro(ingredient: Ingredient): string {
+    const priceString = (ingredient.price * ingredient.quantity).toFixed(2);
+    const [euro, cent] = priceString.split('.');
+    return `${euro}`;
+  }
+
+  getWorthCent(ingredient: Ingredient): string {
+    const priceString = (ingredient.price * ingredient.quantity).toFixed(2);
+    const [euro, cent] = priceString.split('.');
+    return `${cent}`;
+  }
+
+  getSumEuro(): string {
+    let sum = 0;
+    for (let ingredient of this.shoppingListService.getIngredients()) {
+      sum += ingredient.price * ingredient.quantity;
+    }
+    const priceString = sum.toFixed(2);
+    const [euro, cent] = priceString.split('.');
+    return `${euro}`;
+  }
+
+  getSumCent(): string {
+    let sum = 0;
+    for (let ingredient of this.shoppingListService.getIngredients()) {
+      sum += ingredient.price * ingredient.quantity;
+    }
+    const priceString = sum.toFixed(2);
+    const [euro, cent] = priceString.split('.');
+    return `${cent}`;
+  }
+
+
 }

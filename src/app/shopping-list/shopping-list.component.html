@@ -2,40 +2,75 @@
   <div class="col-xs-10">
     <app-shopping-edit></app-shopping-edit>
     <hr>
-    <div class="table-responsive">
+    <div class="table-responsive print">
       <table class="table table-bordered table-striped" style="width: 100%;">
-        <thead>
+        <thead class="background">
         <tr>
           <th>L.p</th>
-          <th>Nazwa</th>
+          <th>Nazwa przedmiotu</th>
+          <th>J.m</th>
           <th>Ilosc stwierdzona</th>
-          <th>Cena</th>
-          <th>Wartosc</th>
+          <th colspan="2">Cena</th>
+          <th colspan="2">Wartosc</th>
           <th>Sprzedane</th>
           <th>Zostalo</th>
+        </tr>
+        </thead>
+        <thead class="background">
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>zł</th>
+          <th>gr</th>
+          <th>zł</th>
+          <th>gr</th>
+          <th></th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
         <tr style="cursor: pointer"
             *ngFor="let ingredient of ingredients; let i = index"
             (click)="onEditItem(ingredient.id)">
-          <td>{{i+1}}</td>
+          <td>{{i + 1}}</td>
           <td>{{ ingredient.name}}</td>
+          <td>szt</td>
           <td>{{ingredient.quantity}}</td>
-          <td>{{ingredient.price}}</td>
-          <td>{{getWorth(ingredient)}}</td>
+          <td>{{getPriceEuro(ingredient)}}</td>
+          <td>{{getPriceCent(ingredient)}}</td>
+          <td>{{getWorthEuro(ingredient)}}</td>
+          <td>{{getWorthCent(ingredient)}}</td>
           <td>{{ingredient.sold}}</td>
           <td>{{getRemaining(ingredient)}}</td>
+        </tr>
+        <tr>
+          <td class="background"></td>
+          <td class="background"></td>
+          <td class="background"></td>
+          <td class="background"></td>
+          <td class="background"></td>
+          <td class="background"></td>
+          <td class="bold background">{{getSumEuro()}}</td>
+          <td class="bold background">{{getSumCent()}}</td>
+          <td class="background"></td>
+          <td class="background"></td>
         </tr>
         </tbody>
       </table>
     </div>
-    <button class="btn btn-success" (click)="saveIngredients()">zapisz</button>
-
-
-    <button class="btn btn-primary" (click)="clearAndSelectFile()">wczytaj</button>
-    <input id="fileInput" type="file" style="display: none" #fileInput (change)="importData($event)">
-
+    <div class="noprint">
+      <button class="btn btn-success" (click)="saveIngredients()">zapisz</button>
+      <button class="btn btn-primary" (click)="clearAndSelectFile()">wczytaj</button>
+      <input id="fileInput" type="file" style="display: none" #fileInput (change)="importData($event)">
+      <hr>
+      <h2 *ngIf="summedIngredients.length > 0">Zostalo w sklepie</h2>
+      <ul>
+        <li *ngFor="let summedIngredient of summedIngredients">{{ summedIngredient.name }}
+          - {{ summedIngredient.quantity - summedIngredient.sold }}</li>
+      </ul>
+    </div>
 
   </div>
 </div>
