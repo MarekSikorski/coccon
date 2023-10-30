@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-xs-12">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <div class="row">
+        <div class="col-sm-4 form-group">
+          <label for="name">Nazwa</label>
+          <input
+            type="text"
+            id="name"
+            class="form-control"
+            name="name"
+            ngModel
+            required>
+        </div>
+        <div class="col-sm-2 form-group">
+          <label for="quantity">Ilosc stwierdzona</label>
+          <input
+            type="number"
+            id="quantity"
+            class="form-control"
+            name="quantity"
+            ngModel
+            required
+            pattern="^[1-9]+[0-9]*$">
+        </div>
+        <div class="col-sm-2 form-group">
+          <label for="price">Cena</label>
+          <input
+            type="number"
+            id="price"
+            class="form-control"
+            name="price"
+            ngModel
+            required
+            pattern="^[1-9]+[0-9]*$">
+        </div>
+        <div class="col-sm-2 form-group">
+          <label for="sold">Sprzedane</label>
+          <input
+            type="number"
+            id="sold"
+            class="form-control"
+            name="sold"
+            ngModel
+            required
+            pattern="^[0-9]+[0-9]*$">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <button class="btn btn-success" type="submit" [disabled]="!f.valid">{{ editMode ? 'zmień' : 'dodaj' }}</button>
+          <button
+            class="btn btn-danger"
+            type="button"
+            (click)="onDelete()"
+            *ngIf="editMode">usuń
+          </button>
+          <button class="btn btn-primary" type="button" (click)="onClear()">wyczyść</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-xs-10">
+    <app-shopping-edit></app-shopping-edit>
+    <hr>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped" style="width: 100%;">
+        <thead>
+        <tr>
+          <th>L.p</th>
+          <th>Nazwa</th>
+          <th>Ilosc stwierdzona</th>
+          <th>Cena</th>
+          <th>Wartosc</th>
+          <th>Sprzedane</th>
+          <th>Zostalo</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr style="cursor: pointer"
+            *ngFor="let ingredient of ingredients; let i = index"
+            (click)="onEditItem(ingredient.id)">
+          <td>{{i+1}}</td>
+          <td>{{ ingredient.name}}</td>
+          <td>{{ingredient.quantity}}</td>
+          <td>{{ingredient.price}}</td>
+          <td>{{getWorth(ingredient)}}</td>
+          <td>{{ingredient.sold}}</td>
+          <td>{{getRemaining(ingredient)}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn btn-success" (click)="saveIngredients()">zapisz</button>
+
+
+    <button class="btn btn-primary" (click)="clearAndSelectFile()">wczytaj</button>
+    <input id="fileInput" type="file" style="display: none" #fileInput (change)="importData($event)">
+
+
+  </div>
+</div>
