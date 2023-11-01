@@ -9,4 +9,14 @@ td {
 .background{
   background: #eaf4ff;
 }
+.to-top {
+  width: 100%;
+  text-align: right;
+}
+
+#table {
+  table-layout: fixed;
+  width: 100%;
+  font-size: 1vw;
+}
 

@@ -80,7 +80,6 @@ export class ShoppingListService {
       if (ingredientMap.has(ingredient.name)) {
         const existingIngredient = ingredientMap.get(ingredient.name);
         existingIngredient!.quantity += ingredient.quantity;
-        existingIngredient!.sold += ingredient.sold;
       } else {
         ingredientMap.set(ingredient.name, { ...ingredient });
       }

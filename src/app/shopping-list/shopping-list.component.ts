@@ -2,7 +2,7 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {Ingredient} from '../shared/ingredient.model';
 import {ShoppingListService} from './shopping-list.service';
 import {Subscription} from 'rxjs';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-shopping-list',
@@ -15,6 +15,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   private subscription1 = new Subscription();
 
   @ViewChild('fileInput') fileInput!: ElementRef;
+  @ViewChild('table', { static: false }) table!: ElementRef;
   summedIngredients: Ingredient[] = [];
 
   clearAndSelectFile() {
@@ -50,11 +51,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.shoppingListService.startedEditing.next(id);
   }
 
-
-  getRemaining(ingredient: Ingredient): number {
-    return ingredient.quantity - ingredient.sold;
-  }
-
   saveIngredients() {
     const jsonData = JSON.stringify(this.ingredients);
     const blob = new Blob([jsonData], {type: 'application/json'});
@@ -78,7 +74,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   getPriceEuro(ingredient: Ingredient): string {
     const priceString = ingredient.price.toFixed(2);
-    const [euro, cent] = priceString.split('.');
+    const [euro] = priceString.split('.');
     return `${euro}`;
   }
 
@@ -121,4 +117,11 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   }
 
 
+  scrollToTop() {
+    window.scrollTo(0, 0);
+  }
+
+  scrollToBottom() {
+    window.scrollTo(0, document.body.scrollHeight);
+  }
 }

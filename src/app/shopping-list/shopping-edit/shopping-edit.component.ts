@@ -20,7 +20,55 @@ export class ShoppingEditComponent implements OnInit, OnDestroy, AfterViewInit {
   editedItem: Ingredient | undefined;
   selectedValue: any;
 
-  constructor(private shoppingListService: ShoppingListService) {
+  options = {
+    values: [
+      "Bluzka",
+      "Biżuteria",
+      "Czapka",
+      "Komplet",
+      "Kurtka",
+      "Obuwie",
+      "Pasek",
+      "Rękawice",
+      "Spodnie",
+      "Spódnica",
+      "Suknia",
+      "Sweter",
+      "Szal",
+      "Torba",
+      "Żakiet",
+      "Portfel",
+      "Zegarek",
+      "Tunika",
+      "Leginsy",
+      "Bolerko",
+      "Pierścień",
+      "Naszyjnik",
+      "Bransoletka",
+      "Broszka",
+      "Kpl.Biż",
+      "Kolczyki",
+      "Pudełko",
+      "Kamizelka",
+      "Zawieszka",
+      "Kombinezon",
+      "Bluza",
+      "Brelok",
+      "Rekl.",
+      "Dres",
+      "Beret",
+      "Koszula",
+      "Kapelusz",
+      "Okulary",
+      "Kardigan",
+      "Dodatki",
+      "Płaszcz"
+    ]
+  };
+
+
+
+constructor(private shoppingListService: ShoppingListService) {
   }
 
   ngAfterViewInit(): void {
@@ -39,10 +87,12 @@ export class ShoppingEditComponent implements OnInit, OnDestroy, AfterViewInit {
               name: this.editedItem.name,
               quantity: this.editedItem.quantity,
               price: this.editedItem.price,
-              sold: this.editedItem.sold
+              sold: null
             });
         }
       );
+
+    this.sortOptionsAlphabetically();
   }
 
   ngOnDestroy(): void {
@@ -52,10 +102,10 @@ export class ShoppingEditComponent implements OnInit, OnDestroy, AfterViewInit {
   onSubmit(form: NgForm) {
     const value = form.value;
 
+    const quantity = value.quantity - value.sold;
     const newIngredient = new Ingredient(uuidv4(), value.name,
-      value.quantity,
-      value.price,
-      value.sold);
+      quantity,
+      value.price);
     if (this.editMode) {
       this.shoppingListService.updateIngredient(this.editedItemId, newIngredient);
     } else {
@@ -63,6 +113,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.editMode = false;
     form.reset();
+    form.controls['name'].setValue(value.name);
     if (this.nameInput) this.nameInput.nativeElement.focus();
   }
 
@@ -76,5 +127,9 @@ export class ShoppingEditComponent implements OnInit, OnDestroy, AfterViewInit {
   onDelete() {
     this.shoppingListService.deleteIngredient(this.editedItemId);
     this.onClear();
+  }
+
+  sortOptionsAlphabetically() {
+    this.options.values.sort((a, b) => a.localeCompare(b));
   }
 }
