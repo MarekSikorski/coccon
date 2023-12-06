@@ -1,63 +1,62 @@
 <div class="row">
-  <div class="col-xs-10">
-    <app-shopping-edit></app-shopping-edit>
-    <hr class="noprint">
+  <div class="col-p2">
     <div class="to-top noprint">
       <button class="btn btn-link" (click)="scrollToBottom()">na dół</button>
     </div>
     <div class="table-responsive print">
-      <table #table class="table table-bordered table-striped" style="width: 100%;">
-        <thead class="background">
+      <table #table class="table table-bordered" style="width: 100%;">
+        <thead>
         <tr>
-          <th>L.p</th>
-          <th>Nazwa przedmiotu</th>
-          <th>J.m</th>
-          <th>Ilosc stwierdzona</th>
-          <th colspan="2">Cena</th>
-          <th colspan="2">Wartosc</th>
+          <th class="bg-body-tertiary">L.p</th>
+          <th class="bg-body-tertiary break-all">Nazwa przedmiotu</th>
+          <th class="bg-body-tertiary">J.m</th>
+          <th class="bg-body-tertiary break-all">Ilosc stwierdzona</th>
+          <th colspan="2" class="bg-body-tertiary">Cena</th>
+          <th colspan="2" class="bg-body-tertiary">Wartosc</th>
         </tr>
         </thead>
-        <thead class="background">
+        <thead>
         <tr>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th>zł</th>
-          <th>gr</th>
-          <th>zł</th>
-          <th>gr</th>
+          <th class="bg-body-tertiary"></th>
+          <th class="bg-body-tertiary"></th>
+          <th class="bg-body-tertiary"></th>
+          <th class="bg-body-tertiary"></th>
+          <th class="bg-body-tertiary">zł</th>
+          <th class="bg-body-tertiary">gr</th>
+          <th class="bg-body-tertiary">zł</th>
+          <th class="bg-body-tertiary">gr</th>
         </tr>
         </thead>
         <tbody>
         <tr style="cursor: pointer"
             *ngFor="let ingredient of ingredients; let i = index"
             (click)="onEditItem(ingredient.id)">
-          <td>{{i + 1}}</td>
-          <td>{{ ingredient.name}}</td>
-          <td>szt</td>
-          <td>{{ingredient.quantity}}</td>
-          <td>{{getPriceEuro(ingredient)}}</td>
-          <td>{{getPriceCent(ingredient)}}</td>
-          <td>{{getWorthEuro(ingredient)}}</td>
-          <td>{{getWorthCent(ingredient)}}</td>
+          <td [ngClass]="editedItemId === ingredient.id ? 'selected' : ''">{{i + 1}}</td>
+          <td [ngClass]="editedItemId === ingredient.id ? 'selected' : ''">{{ ingredient.name}}</td>
+          <td [ngClass]="editedItemId === ingredient.id ? 'selected' : ''">szt</td>
+          <td [ngClass]="editedItemId === ingredient.id ? 'selected' : ''">{{ingredient.quantity}}</td>
+          <td [ngClass]="editedItemId === ingredient.id ? 'selected' : ''">{{getPriceEuro(ingredient)}}</td>
+          <td [ngClass]="editedItemId === ingredient.id ? 'selected' : ''">{{getPriceCent(ingredient)}}</td>
+          <td [ngClass]="editedItemId === ingredient.id ? 'selected' : ''">{{getWorthEuro(ingredient)}}</td>
+          <td [ngClass]="editedItemId === ingredient.id ? 'selected' : ''">{{getWorthCent(ingredient)}}</td>
+
         </tr>
         <tr>
-          <td class="background"></td>
-          <td class="background"></td>
-          <td class="background"></td>
-          <td class="background"></td>
-          <td class="background"></td>
-          <td class="background"></td>
-          <td class="bold background">{{getSumEuro()}}</td>
-          <td class="bold background">{{getSumCent()}}</td>
+          <td class="bg-body-tertiary"></td>
+          <td class="bg-body-tertiary"></td>
+          <td class="bg-body-tertiary"></td>
+          <td class="bg-body-tertiary"></td>
+          <td class="bg-body-tertiary"></td>
+          <td class="bg-body-tertiary"></td>
+          <td class="bold bg-body-tertiary">{{getSumEuro()}}</td>
+          <td class="bold bg-body-tertiary">{{getSumCent()}}</td>
         </tr>
         </tbody>
       </table>
     </div>
     <div class="noprint">
 
-      <button class="btn btn-success btn-spacing" (click)="saveIngredients()">zapisz</button>
+      <button class="btn btn-success btn-spacing me-2" (click)="saveIngredients()">zapisz</button>
       <button class="btn btn-primary btn-spacing" (click)="clearAndSelectFile()">wczytaj</button>
       <input id="fileInput" type="file" style="display: none" #fileInput (change)="importData($event)">
 

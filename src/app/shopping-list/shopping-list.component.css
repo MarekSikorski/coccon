@@ -6,9 +6,10 @@ td {
   font-weight: bold;
 }
 
-.background{
-  background: #eaf4ff;
+.bg-body-tertiary {
+  background: #dfefff;
 }
+
 .to-top {
   width: 100%;
   text-align: right;
@@ -20,3 +21,10 @@ td {
   font-size: 1vw;
 }
 
+.selected {
+  background-color: #edffde;
+}
+
+.break-all {
+  word-break: break-all;
+}

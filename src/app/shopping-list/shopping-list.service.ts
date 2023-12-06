@@ -8,7 +8,7 @@ import {Subject} from 'rxjs';
 export class ShoppingListService {
   ingredientsChanged = new Subject<Ingredient[]>();
   summedIngredientsChanged = new Subject<Ingredient[]>();
-  startedEditing = new Subject<string>();
+  startedEditing = new Subject<string| undefined>();
 
   private ingredients: Ingredient[] = [];
   private summedIngredients: Ingredient[] = [];

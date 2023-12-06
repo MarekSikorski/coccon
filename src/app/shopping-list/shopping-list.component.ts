@@ -13,9 +13,14 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ingredients: Ingredient[] = [];
   private subscription = new Subscription();
   private subscription1 = new Subscription();
+  private subscription2 = new Subscription();
+
+  editMode = false;
+  editedItemId: string = '';
+  editedItem: Ingredient | undefined;
 
   @ViewChild('fileInput') fileInput!: ElementRef;
-  @ViewChild('table', { static: false }) table!: ElementRef;
+  @ViewChild('table', {static: false}) table!: ElementRef;
   summedIngredients: Ingredient[] = [];
 
   clearAndSelectFile() {
@@ -40,15 +45,31 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
         this.summedIngredients = ingredients;
       }
     );
+
+    this.subscription2 = this.shoppingListService.startedEditing
+      .subscribe(
+        (id: string | undefined) => {
+          if (id) {
+            this.editedItemId = id;
+          } else {
+            this.editedItemId = '';
+          }
+        }
+      );
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
     this.subscription1.unsubscribe();
+    this.subscription2.unsubscribe();
   }
 
   onEditItem(id: string) {
-    this.shoppingListService.startedEditing.next(id);
+    if (this.editedItemId === id) {
+      this.shoppingListService.startedEditing.next(undefined);
+    } else {
+      this.shoppingListService.startedEditing.next(id);
+    }
   }
 
   saveIngredients() {
