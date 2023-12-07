@@ -16,7 +16,7 @@
         </select>
       </div>
       <div class="col p-2 form-group">
-        <label class="text-nowrap" for="quantity">Ilosc stwierdzona</label>
+        <label class="text-nowrap" for="quantity">Ilość stwierdzona</label>
         <input
           type="number"
           id="quantity"
@@ -62,7 +62,7 @@
         </button>
         <button class="btn btn-warning" type="button" (click)="onClear()">wyczyść</button>
       </div>
-      <div class="col mb-2 offset-md-4 text-end">
+      <div class="col-auto mb-2 text-end">
         <button class="btn btn-info btn-spacing"  type="button" [disabled]="!editMode" (click)="onSell(f)">sprzedaj</button>
       </div>
     </div>
